@@ -1,0 +1,13 @@
+[gd_scene format=2]
+
+[node name="Units" type="HBoxContainer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = 87.0
+margin_top = -52.0
+margin_right = 221.0
+margin_bottom = -27.0
+size_flags_horizontal = 4
+size_flags_vertical = 4

@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UpcommingUnit.gd" type="Script" id=1]
+
+[node name="UpcommingUnit" type="Control"]
+anchor_right = 0.0292969
+anchor_bottom = 0.05
+margin_right = -63.0
+margin_bottom = -275.0
+rect_min_size = Vector2( 15, 15 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": true
+}

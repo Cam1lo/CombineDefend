@@ -1,0 +1,267 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://MeshInstance.tscn" type="PackedScene" id=1]
+[ext_resource path="res://CameraPivot.gd" type="Script" id=2]
+[ext_resource path="res://Units.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Units.gd" type="Script" id=4]
+[ext_resource path="res://Main.gd" type="Script" id=5]
+[ext_resource path="res://Ground.gd" type="Script" id=6]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 7.22256, 0, 7.06172 )
+
+[sub_resource type="PanoramaSky" id=4]
+
+[sub_resource type="Environment" id=3]
+background_sky = SubResource( 4 )
+
+[sub_resource type="Animation" id=10]
+resource_name = "l135to45"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CameraPivot:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 60, 135, 0 ), Vector3( 60, 45, 0 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "l225to135"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CameraPivot:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 60, 225, 0 ), Vector3( 60, 135, 0 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "l315to225"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CameraPivot:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 60, 315, 0 ), Vector3( 60, 225, 0 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "l45to-45"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CameraPivot:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 60, 45, 0 ), Vector3( 60, -45, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "r135to225"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CameraPivot:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 60, 135, 0 ), Vector3( 60, 225, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "r225to315"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CameraPivot:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 60, 225, 0 ), Vector3( 60, 315, 0 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "r315to405"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CameraPivot:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 60, 315, 0 ), Vector3( 60, 405, 0 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "r45to135"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CameraPivot:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 60, 45, 0 ), Vector3( 60, 135, 0 ) ]
+}
+
+[node name="Main" type="CanvasLayer"]
+script = ExtResource( 5 )
+
+[node name="Units" parent="." instance=ExtResource( 3 )]
+script = ExtResource( 4 )
+
+[node name="Ground" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.576934, 0, 1.57697 )
+script = ExtResource( 6 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Ground"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.506464, 0, -1.45057 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.50571, 0, -7.50955 )
+
+[node name="MeshInstance2" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.50571, 0, -4.50955 )
+
+[node name="MeshInstance3" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.50571, 0, -1.50955 )
+
+[node name="MeshInstance4" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.50571, 0, 1.49045 )
+
+[node name="MeshInstance5" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.50571, 0, 4.49045 )
+
+[node name="MeshInstance6" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50571, 0, -7.50955 )
+
+[node name="MeshInstance7" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50571, 0, -4.50955 )
+
+[node name="MeshInstance8" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50571, 0, -1.50955 )
+
+[node name="MeshInstance9" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50571, 0, 1.49045 )
+
+[node name="MeshInstance10" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50571, 0, 4.49045 )
+
+[node name="MeshInstance11" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.494291, 0, -7.50955 )
+
+[node name="MeshInstance12" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.494291, 0, -4.50955 )
+
+[node name="MeshInstance13" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.494291, 0, -1.50955 )
+
+[node name="MeshInstance14" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.494291, 0, 1.49045 )
+
+[node name="MeshInstance15" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.494291, 0, 4.49045 )
+
+[node name="MeshInstance16" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.49429, 0, -7.50955 )
+
+[node name="MeshInstance17" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.49429, 0, -4.50955 )
+
+[node name="MeshInstance18" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.49429, 0, -1.50955 )
+
+[node name="MeshInstance19" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.49429, 0, 1.49045 )
+
+[node name="MeshInstance20" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.49429, 0, 4.49045 )
+
+[node name="MeshInstance21" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49429, 0, -7.50955 )
+
+[node name="MeshInstance22" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49429, 0, -4.50955 )
+
+[node name="MeshInstance23" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49429, 0, -1.50955 )
+
+[node name="MeshInstance24" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49429, 0, 1.49045 )
+
+[node name="MeshInstance25" parent="Ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.49429, 0, 4.49045 )
+
+[node name="MainLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.857978, -0.181479, -0.48056, -0.370013, 0.867258, 0.333098, 0.356319, 0.463604, -0.811238, -16.3404, 16.9209, -18.4069 )
+light_specular = 0.0
+light_bake_mode = 0
+
+[node name="CounterLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.659422, -0.109857, 0.743703, 0.0380157, 0.992873, 0.112956, -0.750812, -0.0462131, 0.658898, 13.2455, 0.499498, 13.4003 )
+light_energy = 0.2
+light_specular = 0.0
+light_bake_mode = 0
+
+[node name="CameraPivot" type="Position3D" parent="."]
+transform = Transform( 0.707107, 0.612372, 0.353553, 0, 0.5, -0.866025, -0.707107, 0.612372, 0.353553, -0.501409, 9.53674e-07, -1.40776 )
+script = ExtResource( 2 )
+
+[node name="Camera" type="Camera" parent="CameraPivot"]
+transform = Transform( -1, 3.69465e-08, 7.92319e-08, 0, 0.906308, -0.422618, -8.74228e-08, -0.422618, -0.906308, 2.38419e-07, -9.73642, -24.6213 )
+fov = 58.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/l135to45 = SubResource( 10 )
+anims/l225to135 = SubResource( 9 )
+anims/l315to225 = SubResource( 11 )
+anims/l45to-45 = SubResource( 12 )
+anims/r135to225 = SubResource( 5 )
+anims/r225to315 = SubResource( 6 )
+anims/r315to405 = SubResource( 8 )
+anims/r45to135 = SubResource( 7 )
+
+[connection signal="unit_placed" from="Ground" to="." method="_on_Ground_unit_placed"]
