@@ -1,11 +1,10 @@
 extends Spatial
 export var pos: Vector2
-signal unit_placed(pos, unit)
+signal unit_placed(pos)
 
 func _on_StaticBody_input_event(camera, event, position, normal, shape_idx):
 	if event is InputEventMouseButton and event.is_pressed():
-		var unit = get_tree().root.get_child(0).get_selected_unit()
-		create_box(unit)
+		emit_signal("unit_placed", pos)
 
 func _on_StaticBody_mouse_entered():
 	var new_material = SpatialMaterial.new()
@@ -25,12 +24,14 @@ func create_box(unit):
 	box.material = material
 	box.translate(Vector3(0,1,0))
 	self.add_child(box)
-	emit_signal("unit_placed", pos, unit)
 
-func grow_box():
+func grow_box(unit):
 	var box = get_child(1)
-	box.height = 4
-	box.translate(Vector3(0,1,0))
+	if(box == null):
+		create_box(unit)
+	else: 
+		box.height = 4
+		box.translate(Vector3(0,1,0))
 
 func remove_box():
 	self.remove_child(get_child(1))

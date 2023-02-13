@@ -18,16 +18,19 @@ func _ready():
 func get_selected_unit():
 	return units[0]
 
-func _on_Ground_unit_placed(pos, unit):
-	grid[pos.x][pos.y] = unit
+func _on_Ground_unit_placed(pos):
+	grid[pos.x][pos.y] = get_selected_unit()
 	grow_units(pos)
-	units.pop_front()
-	queue_random_unit()
-	$Units.inventory_update(units)
+	inventory_pop_queue()
 
 func generate_units(size):
 	for i in range(0, size):
 		queue_random_unit()
+
+func inventory_pop_queue():
+	units.pop_front()
+	queue_random_unit()
+	$Units.inventory_update(units)
 
 func queue_random_unit():
 	var random_color = color_dict[randi() % color_dict.size() - 1]
@@ -75,10 +78,12 @@ func get_abjacent_similar_units_with_pos(pos):
 	return similar_units
 
 func grow_units(pos):
+	$Ground.grow_on_tile(pos, get_selected_unit())
+
+func check_siblings(pos):
 	var siblings = get_abjacent_similar_units_with_pos(pos)
 	if(siblings.size() == 1 and grid[siblings[0][1].x][siblings[0][1].y].height == 1):
 		grid[siblings[0][1].x][siblings[0][1].y].height += 1
 		yield(get_tree().create_timer(0.4), "timeout")
 		$Ground.grow_on_tile(siblings[0][1])
 		$Ground.remove_from_tile(pos)
-	

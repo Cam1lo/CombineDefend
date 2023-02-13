@@ -1,5 +1,5 @@
 extends StaticBody
-signal unit_placed(pos, unit)
+signal unit_placed(pos)
 
 var tiles = []
 
@@ -13,13 +13,13 @@ func _ready():
 		tiles[i].connect('unit_placed', self, 'unit_placed')
 
 
-func unit_placed(pos, unit):
-	emit_signal("unit_placed", pos, unit)
+func unit_placed(pos):
+	emit_signal("unit_placed", pos)
 
-func grow_on_tile(pos):
+func grow_on_tile(pos, unit):
 	for tile in tiles:
 		if (tile.pos == pos):
-			tile.grow_box()
+			tile.grow_box(unit)
 
 func remove_from_tile(pos):
 	for tile in tiles:
