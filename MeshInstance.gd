@@ -21,23 +21,25 @@ func create_box(unit):
 	var box = CSGBox.new()
 	var material = SpatialMaterial.new()
 	material.albedo_color = unit.color
-	box.height = unit.height * 2
 	box.material = material
-	box.translate(Vector3(0,1,0))
+	box.height = 0
 	self.add_child(box)
+	grow_box(unit.height)
 
 func grow_new_box(unit):
 	create_box(unit)
 
 func grow_box(height):
+	height *= 2
 	var box = get_child(1)
+	
 	if(box != null): 
-		box.height = height * 2
-		box.translate(Vector3(0, 1, 0))
+		box.translate(Vector3(0, -box.height/2, 0))
+		box.translate(Vector3(0, height/2, 0))
+		box.height = height
 
 func remove_box():
 	self.remove_child(get_child(1))
-	print(self.get_children())
 
 func get_height():
 	var box = get_child(1)

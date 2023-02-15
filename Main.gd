@@ -13,7 +13,7 @@ var grid = []
 func _ready():
 	init_grid()
 	generate_units(4)
-	$Units.inventory_update(units)
+	$Inventory.inventory_update(units)
 
 func get_selected_unit():
 	return units[0]
@@ -31,7 +31,7 @@ func generate_units(size):
 func inventory_pop_queue():
 	units.pop_front()
 	queue_random_unit()
-	$Units.inventory_update(units)
+	$Inventory.inventory_update(units)
 
 func queue_random_unit():
 	var random_color = color_dict[randi() % color_dict.size() - 1]
@@ -66,6 +66,7 @@ func display_grid():
 	print('------------------------------------')
 
 func check_grid():
+	check_group_collisions()
 	check_collisions()
 	check_game_over()
 
@@ -116,3 +117,48 @@ func check_collisions():
 						collided = true
 	if collided:
 		check_collisions()
+
+func get_adjacent_positions(pos):
+	var adjacent_positions = []
+	var row = pos.x
+	var col = pos.y
+	if row > 0:
+		adjacent_positions.append(Vector2(row - 1, col))
+	if row < 4:
+		adjacent_positions.append(Vector2(row + 1, col))
+	if col > 0:
+		adjacent_positions.append(Vector2(row, col - 1))
+	if col < 4:
+		adjacent_positions.append(Vector2(row, col + 1))
+	return adjacent_positions
+
+func get_adjacent_units_with_pos(pos):
+	var units_and_pos = []
+
+	var positions = get_adjacent_positions(pos)
+	for i in positions:
+		var unit = grid[i.x][i.y]
+		if(typeof(unit) != TYPE_INT):
+			units_and_pos.append([unit, i])
+	return units_and_pos
+
+func get_abjacent_similar_units_with_pos(pos):
+	var unit = grid[pos.x][pos.y]
+	var similar_units = []
+	var adjacent_units = get_adjacent_units_with_pos(pos)
+	for adj_unit in adjacent_units:
+		if (unit.color == adj_unit[0].color and unit.height == adj_unit[0].height):
+			similar_units.append(adj_unit)
+	return similar_units
+
+func check_group_collisions():
+	for i in range(5):
+		for j in range(5):
+			if(grid[i][j]):
+				var s_colliders = get_abjacent_similar_units_with_pos(Vector2(i,j))
+				if s_colliders.size() > 1:
+					var new_height =  grid[i][j].height + s_colliders.size()
+					grid[i][j].height = new_height
+					$Ground.grow_tile(Vector2(i,j), new_height)
+					for s_collider in s_colliders:
+						$Ground.remove_from_tile(s_collider[1])
