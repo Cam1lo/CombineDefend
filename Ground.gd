@@ -20,11 +20,13 @@ func grow_new_tile(pos, unit):
 	for tile in tiles:
 		if (tile.pos == pos):
 			tile.grow_new_box(unit)
+			$UnitPlacedAudio.play()
 
 func grow_tile(pos, height):
 	for tile in tiles:
 		if (tile.pos == pos):
 			tile.grow_box(height)
+			$UnitGrownAudio.play()
 
 func remove_from_tile(pos):
 	for tile in tiles:
