@@ -15,6 +15,7 @@ func _ready():
 
 func unit_placed(pos):
 	emit_signal("unit_placed", pos)
+	
 
 func grow_new_tile(pos, unit):
 	for tile in tiles:
@@ -37,3 +38,8 @@ func i_to_grid_pos(i):
 	var row = int(i) / 5
 	var col = int(i) % 5
 	return Vector2(row, col)
+
+func get_tile(pos):
+	for tile in tiles:
+		if(tile.pos == pos):
+			return tile
