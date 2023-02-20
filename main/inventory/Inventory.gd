@@ -1,7 +1,7 @@
 extends HBoxContainer
 
-var SelectedUnit = load('res://SelectedUnit.tscn')
-var UpcommingUnit = load('res://UpcommingUnit.tscn')
+var SelectedUnit = load('res://main/inventory/SelectedUnit.tscn')
+var UpcommingUnit = load('res://main/inventory/UpcommingUnit.tscn')
 
 func inventory_update(units):
 	delete_children(self)

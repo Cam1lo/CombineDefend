@@ -1,5 +1,5 @@
 extends CanvasLayer
-var UnitClass = load('res://Unit.gd')
+var UnitClass = load('res://models/Unit.gd')
 
 var units = []
 var turns = 0
