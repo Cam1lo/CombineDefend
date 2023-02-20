@@ -10,14 +10,15 @@ var yellow = Color('fcbf49')
 var color_dict = [red, blue, green, yellow]
 var grid = []
 
-func _process(delta):
-	if !$BackgroundMusic.playing:
-		$BackgroundMusic.play()
-
 func _ready():
+	randomize()
 	init_grid()
 	generate_units(4)
 	$Inventory.inventory_update(units)
+
+func _process(delta):
+	if !$BackgroundMusic.playing:
+		$BackgroundMusic.play()
 
 func get_selected_unit():
 	return units[0]
