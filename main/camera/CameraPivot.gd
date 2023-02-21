@@ -2,12 +2,21 @@ extends Position3D
 
 onready var AP = get_node('../AnimationPlayer')
 
+var camera_controlled: bool = false
+var mouse_pos: Vector2 
+
 func _process(delta):
 	if Input.is_action_just_pressed("rotate_camera_left"):
 		rotate_left()
 	if Input.is_action_just_pressed("rotate_camera_right"):
 		rotate_right()
-
+	
+	if Input.is_action_just_pressed("camera_control"):
+		camera_controlled = true
+		mouse_pos = get_viewport().get_mouse_position()
+	if Input.is_action_just_released("camera_control"):
+		camera_controlled = false
+	
 func rotate_left():
 	match int(ceil(rotation_degrees.y)):
 		-45: 
@@ -41,3 +50,14 @@ func rotate_right():
 			AP.play("r45to135")
 		_:
 			print(rotation_degrees.y)
+
+func _unhandled_input(event):
+	if event is InputEventMouseMotion and camera_controlled:
+		var diff_x = mouse_pos.x - event.position.x
+		var diff_y = event.position.y - mouse_pos.y
+
+		#CameraPivot Cordenates are inverted
+		if(self.rotation_degrees.x + diff_y > 45 and self.rotation_degrees.x + diff_y < 120):
+			self.rotation_degrees.x += diff_y
+		self.rotation_degrees.y += diff_x
+		mouse_pos = event.position

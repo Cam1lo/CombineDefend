@@ -1,7 +1,7 @@
 extends CanvasLayer
 var UnitClass = load('res://models/Unit.gd')
 
-export var audio_enabled: bool = true
+export var audio_enabled: bool = false
 
 var units = []
 var turns = 0
