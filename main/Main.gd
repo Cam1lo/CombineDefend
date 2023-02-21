@@ -96,7 +96,7 @@ func check_game_over():
 			if typeof(units[i][j]) == TYPE_INT:
 				game_over = false
 	if game_over:
-		print("Game Over")
+		get_tree().change_scene("res://ui/game_over/GameOver.tscn")
  
 func check_collisions():
 	var units = grid
