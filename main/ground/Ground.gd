@@ -18,7 +18,7 @@ func unit_placed(pos):
 
 func get_audio_enabled():
 	var main = get_node('/root/Main')
-	return main.audio_enabled
+	return main.config.audio_enabled
 
 func grow_new_tile(pos, unit):
 	var audio = get_audio_enabled()

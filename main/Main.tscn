@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://main/ground/MeshInstance.tscn" type="PackedScene" id=1]
 [ext_resource path="res://main/camera/CameraPivot.gd" type="Script" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://assets/audio/unit_placed.wav" type="AudioStream" id=7]
 [ext_resource path="res://assets/audio/unit_grown.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/audio/background_music.wav" type="AudioStream" id=9]
+[ext_resource path="res://main/GridController.gd" type="Script" id=10]
+[ext_resource path="res://main/BackgroundMusic.gd" type="Script" id=11]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 7.22256, 0, 7.06172 )
@@ -152,6 +154,9 @@ script = ExtResource( 5 )
 [node name="Inventory" parent="." instance=ExtResource( 3 )]
 script = ExtResource( 4 )
 
+[node name="GridController" type="Node" parent="."]
+script = ExtResource( 10 )
+
 [node name="Ground" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.576934, 0, 1.57697 )
 script = ExtResource( 6 )
@@ -279,5 +284,6 @@ anims/r45to135 = SubResource( 7 )
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
 volume_db = -8.0
+script = ExtResource( 11 )
 
 [connection signal="unit_placed" from="Ground" to="." method="_on_Ground_unit_placed"]
