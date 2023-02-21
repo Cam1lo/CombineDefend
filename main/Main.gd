@@ -20,17 +20,19 @@ func _ready():
 	$Inventory.inventory_update(units)
 
 func set_initial_units(amount):
+	var was_audio_enabled = audio_enabled
 	audio_enabled = false
 	for i in range(0, amount):
 		var random_pos = Vector2(randi() % 5, randi() % 5)
-		grid[random_pos.x][random_pos.y] = get_selected_unit()
-		place_unit(random_pos, get_selected_unit())
-		check_grid()
-		inventory_pop_queue()
-	audio_enabled = true
+		if typeof(grid[random_pos.x][random_pos.y]) == TYPE_INT:
+			grid[random_pos.x][random_pos.y] = get_selected_unit()
+			place_unit(random_pos, get_selected_unit())
+			check_grid()
+			inventory_pop_queue()
+	audio_enabled = was_audio_enabled
 
 func _process(delta):
-	if !$BackgroundMusic.playing:
+	if !$BackgroundMusic.playing and audio_enabled:
 		$BackgroundMusic.play()
 
 func get_selected_unit():
