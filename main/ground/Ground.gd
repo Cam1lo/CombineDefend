@@ -15,19 +15,26 @@ func _ready():
 
 func unit_placed(pos):
 	emit_signal("unit_placed", pos)
-	
+
+func get_audio_enabled():
+	var main = get_node('/root/Main')
+	return main.audio_enabled
 
 func grow_new_tile(pos, unit):
+	var audio = get_audio_enabled()
 	for tile in tiles:
 		if (tile.pos == pos):
 			tile.grow_new_box(unit)
-			$UnitPlacedAudio.play()
+			if audio:
+				$UnitPlacedAudio.play()
 
 func grow_tile(pos, height):
+	var audio = get_audio_enabled()
 	for tile in tiles:
 		if (tile.pos == pos):
 			tile.grow_box(height)
-			$UnitGrownAudio.play()
+			if audio:
+				$UnitGrownAudio.play()
 
 func remove_from_tile(pos):
 	for tile in tiles:

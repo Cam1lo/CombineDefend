@@ -1,6 +1,8 @@
 extends CanvasLayer
 var UnitClass = load('res://models/Unit.gd')
 
+export var audio_enabled: bool = true
+
 var units = []
 var turns = 0
 var red = Color('e63946')
@@ -14,7 +16,18 @@ func _ready():
 	randomize()
 	init_grid()
 	generate_units(4)
+	set_initial_units(10)	
 	$Inventory.inventory_update(units)
+
+func set_initial_units(amount):
+	audio_enabled = false
+	for i in range(0, amount):
+		var random_pos = Vector2(randi() % 5, randi() % 5)
+		grid[random_pos.x][random_pos.y] = get_selected_unit()
+		place_unit(random_pos, get_selected_unit())
+		check_grid()
+		inventory_pop_queue()
+	audio_enabled = true
 
 func _process(delta):
 	if !$BackgroundMusic.playing:
