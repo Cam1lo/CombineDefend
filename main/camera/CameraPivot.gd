@@ -6,11 +6,6 @@ var camera_controlled: bool = false
 var mouse_pos: Vector2 
 
 func _process(delta):
-	if Input.is_action_just_pressed("rotate_camera_left"):
-		rotate_left()
-	if Input.is_action_just_pressed("rotate_camera_right"):
-		rotate_right()
-	
 	if Input.is_action_just_pressed("camera_control"):
 		camera_controlled = true
 		mouse_pos = get_viewport().get_mouse_position()
