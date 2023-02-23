@@ -2,6 +2,7 @@ extends Node
 
 var grid = []
 onready var ground = get_node("/root/Main/Ground")
+onready var config = get_node("/root/Main/").config
 
 func init():
 	for x in range(5):
@@ -45,12 +46,14 @@ func check_collisions():
 					if units[i][j].age <= units[i][j+1].age:
 						units[i][j].height += 1
 						units[i][j+1] = 0
+						yield(get_tree().create_timer(config.time_delay), "timeout")
 						ground.grow_tile(Vector2(i,j), units[i][j].height)
 						ground.remove_from_tile(Vector2(i, j+1))
 						collided = true
 					else:
 						units[i][j+1].height += 1
 						units[i][j] = 0
+						yield(get_tree().create_timer(config.time_delay), "timeout")
 						ground.grow_tile(Vector2(i,j+1), units[i][j+1].height)
 						ground.remove_from_tile(Vector2(i, j))
 						collided = true
@@ -61,12 +64,14 @@ func check_collisions():
 					if units[i][j].age <= units[i+1][j].age:
 						units[i][j].height += 1
 						units[i+1][j] = 0
+						yield(get_tree().create_timer(config.time_delay), "timeout")
 						ground.grow_tile(Vector2(i,j), units[i][j].height)
 						ground.remove_from_tile(Vector2(i+1, j))
 						collided = true
 					else:
 						units[i+1][j].height += 1
 						units[i][j] = 0
+						yield(get_tree().create_timer(config.time_delay), "timeout")
 						ground.grow_tile(Vector2(i+1,j), units[i+1][j].height)
 						ground.remove_from_tile(Vector2(i, j))
 						collided = true
@@ -114,6 +119,7 @@ func check_group_collisions():
 				if s_colliders.size() > 1:
 					var new_height =  grid[i][j].height + s_colliders.size()
 					grid[i][j].height = new_height
+					yield(get_tree().create_timer(config.time_delay), "timeout")
 					ground.grow_tile(Vector2(i,j), new_height)
 					for s_collider in s_colliders:
 						ground.remove_from_tile(s_collider[1])

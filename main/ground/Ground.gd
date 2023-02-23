@@ -12,7 +12,6 @@ func _ready():
 		tiles[i].pos = i_to_grid_pos(i)
 		tiles[i].connect('unit_placed', self, 'unit_placed')
 
-
 func unit_placed(pos):
 	emit_signal("unit_placed", pos)
 

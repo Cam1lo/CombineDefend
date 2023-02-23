@@ -283,7 +283,6 @@ anims/r45to135 = SubResource( 7 )
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
-volume_db = -8.0
 script = ExtResource( 11 )
 
 [connection signal="unit_placed" from="Ground" to="." method="_on_Ground_unit_placed"]

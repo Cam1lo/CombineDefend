@@ -1,7 +1,9 @@
 extends CanvasLayer
 
 var config = {
-	'audio_enabled': true
+	'audio_enabled': true,
+	'time_delay': 0.3,
+	'volume': 1
 }
 
 const INITIAL_INVENTORY_SIZE = 4
@@ -20,8 +22,12 @@ func _ready():
 	BackgroundMusic.init(config)
 	
 func set_initial_units(amount):
-	var was_audio_enabled = config.audio_enabled
+	var previous_config_audio = config.audio_enabled
+	var previous_config_time = config.time_delay
+	
 	config.audio_enabled = false
+	config.time_delay = 0
+	
 	for i in range(0, amount):
 		var random_pos = Vector2(randi() % 5, randi() % 5)
 		if typeof(GridController.grid[random_pos.x][random_pos.y]) == TYPE_INT:
@@ -29,7 +35,10 @@ func set_initial_units(amount):
 			place_unit(random_pos, Inventory.get_selected_unit())
 			GridController.check_grid()
 			Inventory.pop_queue()
-	config.audio_enabled = was_audio_enabled
+			
+	yield(get_tree().create_timer(0.1), "timeout")	
+	config.audio_enabled = previous_config_audio
+	config.time_delay = previous_config_time
 
 func _on_Ground_unit_placed(pos):
 	GridController.grid[pos.x][pos.y] = Inventory.get_selected_unit()

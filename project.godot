@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Combine & Defend"
-run/main_scene="res://ui/Menu.tscn"
+run/main_scene="res://ui/menu/Menu.tscn"
 
 [audio]
 
