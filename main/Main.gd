@@ -1,10 +1,6 @@
 extends CanvasLayer
 
-var config = {
-	'audio_enabled': true,
-	'time_delay': 0.3,
-	'volume': 1
-}
+onready var config = get_config()
 
 const INITIAL_INVENTORY_SIZE = 4
 const INITIAL_UNITS_ON_GRID = 10
@@ -14,7 +10,8 @@ onready var Inventory = $Inventory
 onready var BackgroundMusic = $BackgroundMusic
 
 func _ready():
-	randomize()
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), config.volume)
+
 	GridController.init()
 	Inventory.generate_units(INITIAL_INVENTORY_SIZE)
 	set_initial_units(INITIAL_UNITS_ON_GRID)	
@@ -56,3 +53,26 @@ func place_units_from_grid(grid: Array):
 func place_unit(pos, unit):
 	$Ground.grow_new_tile(pos, unit)
 
+func read_config():
+	var file = File.new()
+	file.open("res://config.res", File.READ)
+	var read_dict = str2var(file.get_as_text())
+	file.close()
+	return read_dict
+
+func get_config():
+	var data = {}
+	var config = ConfigFile.new()
+
+	# Load data from a file.
+	var err = config.load("user://config.cfg")
+
+	# If the file didn't load, ignore it.
+	if err != OK:
+		return
+
+	# Iterate over all sections.
+	for key in config.get_section_keys('Player1'):
+		data[key] = config.get_value('Player1', key)
+	
+	return data

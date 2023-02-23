@@ -31,10 +31,16 @@ text = "GAME OVER"
 align = 1
 valign = 1
 
-[node name="RestartButton" type="Button" parent="VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
 margin_top = 18.0
 margin_right = 112.0
-margin_bottom = 38.0
+margin_bottom = 33.0
+rect_min_size = Vector2( 50, 15 )
+
+[node name="RestartButton" type="Button" parent="VBoxContainer"]
+margin_top = 37.0
+margin_right = 112.0
+margin_bottom = 57.0
 text = "RESTART"
 
 [connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_RestartButton_pressed"]

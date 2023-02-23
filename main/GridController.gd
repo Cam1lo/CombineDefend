@@ -2,7 +2,7 @@ extends Node
 
 var grid = []
 onready var ground = get_node("/root/Main/Ground")
-onready var config = get_node("/root/Main/").config
+onready var config = get_config()
 
 func init():
 	for x in range(5):
@@ -123,3 +123,20 @@ func check_group_collisions():
 					ground.grow_tile(Vector2(i,j), new_height)
 					for s_collider in s_colliders:
 						ground.remove_from_tile(s_collider[1])
+
+func get_config():
+	var data = {}
+	var config = ConfigFile.new()
+
+	# Load data from a file.
+	var err = config.load("user://config.cfg")
+
+	# If the file didn't load, ignore it.
+	if err != OK:
+		return
+
+	# Iterate over all sections.
+	for key in config.get_section_keys('Player1'):
+		data[key] = config.get_value('Player1', key)
+	
+	return data
