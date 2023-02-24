@@ -46,16 +46,16 @@ func check_collisions():
 					if units[i][j].age <= units[i][j+1].age:
 						units[i][j].height += 1
 						units[i][j+1] = 0
-						yield(get_tree().create_timer(config.time_delay), "timeout")
+						yield(get_tree().create_timer(config.time_delay), "timeout")						
 						ground.grow_tile(Vector2(i,j), units[i][j].height)
-						ground.remove_from_tile(Vector2(i, j+1))
+						ground.remove_from_tile(Vector2(i, j+1), get_direction(Vector2(i, j+1), Vector2(i,j)))
 						collided = true
 					else:
 						units[i][j+1].height += 1
 						units[i][j] = 0
-						yield(get_tree().create_timer(config.time_delay), "timeout")
+						yield(get_tree().create_timer(config.time_delay), "timeout")						
 						ground.grow_tile(Vector2(i,j+1), units[i][j+1].height)
-						ground.remove_from_tile(Vector2(i, j))
+						ground.remove_from_tile(Vector2(i, j), get_direction(Vector2(i, j), Vector2(i,j + 1)))
 						collided = true
 	for i in range(4):
 		for j in range(5):
@@ -66,14 +66,14 @@ func check_collisions():
 						units[i+1][j] = 0
 						yield(get_tree().create_timer(config.time_delay), "timeout")
 						ground.grow_tile(Vector2(i,j), units[i][j].height)
-						ground.remove_from_tile(Vector2(i+1, j))
+						ground.remove_from_tile(Vector2(i+1, j), get_direction(Vector2(i+1, j), Vector2(i,j)))
 						collided = true
 					else:
 						units[i+1][j].height += 1
 						units[i][j] = 0
 						yield(get_tree().create_timer(config.time_delay), "timeout")
 						ground.grow_tile(Vector2(i+1,j), units[i+1][j].height)
-						ground.remove_from_tile(Vector2(i, j))
+						ground.remove_from_tile(Vector2(i, j), get_direction(Vector2(i, j), Vector2(i + 1,j)))
 						collided = true
 	if collided:
 		check_collisions()
@@ -119,10 +119,9 @@ func check_group_collisions():
 				if s_colliders.size() > 1:
 					var new_height =  grid[i][j].height + s_colliders.size()
 					grid[i][j].height = new_height
-					yield(get_tree().create_timer(config.time_delay), "timeout")
 					ground.grow_tile(Vector2(i,j), new_height)
 					for s_collider in s_colliders:
-						ground.remove_from_tile(s_collider[1])
+						ground.remove_from_tile(s_collider[1], get_direction(Vector2(s_collider[1].x, s_collider[1].y), Vector2(i,j)))
 
 func get_config():
 	var data = {}
@@ -140,3 +139,13 @@ func get_config():
 		data[key] = config.get_value('Player1', key)
 	
 	return data
+
+func get_direction(vector1, vector2):
+	if vector1.x < vector2.x:
+		return 'left'
+	if vector1.x > vector2.x:
+		return 'right'
+	if vector1.y < vector2.y:
+		return 'down'
+	if vector1.y > vector2.y:
+		return 'up'

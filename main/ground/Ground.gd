@@ -35,10 +35,10 @@ func grow_tile(pos, height):
 			if audio:
 				$UnitGrownAudio.play()
 
-func remove_from_tile(pos):
+func remove_from_tile(pos, direction):
 	for tile in tiles:
 		if (tile.pos == pos):
-			tile.remove_box()
+			tile.remove_box(direction)
 
 func i_to_grid_pos(i):
 	var row = int(i) / 5
